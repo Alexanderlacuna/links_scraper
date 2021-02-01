@@ -28,8 +28,6 @@ def fetch_page_links(page_url):
     visited = set()
 
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
-    internal_links = set()
     html_page = uReq(page_url)
     parsed_page = soup(html_page, "html.parser")
 
@@ -37,20 +35,17 @@ def fetch_page_links(page_url):
         link_url = link.attrs.get("href")
 
         if re.match(r"^/", link_url):
-            # means it's an internal link
 
             full_path = urljoin('https://www.genenetwork.org/', link_url)
-            if link not in visited:
-
-                internal_links.add(full_path)
-
         elif re.match(r'^http://', link_url):
-            # external link
             full_path = link_url
 
         if link not in visited:
             visited.add(link)
             test_link(full_path)
+
+        else:
+            print(f"link has already being visited {full_path}")
 
 
 def scraper_for_webpage(page_url):
