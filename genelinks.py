@@ -19,10 +19,10 @@ def test_link(link):
     print(f'the link {link}--->{status_code}')
 
 
-html_page = uReq("https://www.genenetwork.org/")
-soup = soup(html_page, "html.parser")
-for link in soup.findAll("a", attrs={'href': re.compile("^http://")}):
-    test_link(link.get("href"))
+# html_page = uReq("https://www.genenetwork.org/")
+# soup = soup(html_page, "html.parser")
+# for link in soup.findAll("a", attrs={'href': re.compile("^http://")}):
+#     test_link(link.get("href"))
 
 
 def scraper_for_webpage(page_url):
@@ -30,8 +30,8 @@ def scraper_for_webpage(page_url):
     parsed_page = soup(html_page, "html.parser")
 
     for link in parsed_page.findAll("a", attrs={"href": re.compile("^http://")}):
-        print(link)
         test_link(link.get("href"))
 
 
-scraper_for_webpage(page_url="https://www.genenetwork.org/")
+
+scraper_for_webpage("https://www.genenetwork.org/")
