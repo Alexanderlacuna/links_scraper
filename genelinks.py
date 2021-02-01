@@ -16,14 +16,7 @@ def test_link(link):
 
     status_code = results.status_code if results is not None else "404"
 
-    print(f'the link {link}--->{status_code}')
-
-
-# html_page = uReq("https://www.genenetwork.org/")
-# soup = soup(html_page, "html.parser")
-# for link in soup.findAll("a", attrs={'href': re.compile("^http://")}):
-#     test_link(link.get("href"))
-
+    print(f'the link {link} ---> {status_code}')
 
 def scraper_for_webpage(page_url):
     html_page = uReq(page_url)
