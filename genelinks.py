@@ -17,7 +17,7 @@ def test_link(link):
     status_code = results.status_code if results is not None else "404"
 
     print(f'the link {link} ---> {status_code}')
-def call_links_recursively(page_url):
+def call_links_recursively(page_url,visited={}):
 
     '''modified function to call internal links recursively '''
     internal_links = set()
@@ -25,24 +25,29 @@ def call_links_recursively(page_url):
     parsed_page = soup(html_page,"html.parser")
 
     for link in parsed_page.findAll("a"):
-        link_url = links.attrs.get(href)
+        link_url = link.attrs.get("href")
 
-        if re.match(r"^/",href):
+        if re.match(r"^/",link_url):
             # means it's an internal link
 
-            full_path = urljoin('https://www.genenetwork.org/',href)
-            internal_links.add(full_path)
+            full_path = urljoin('https://www.genenetwork.org/',link_url)
+            if link not in visited:
 
-        elif  re.match(r'^http://',href):
+                internal_links.add(full_path)
+
+        elif  re.match(r'^http://',link_url):
             # external link
-            full_path= href
+            full_path= link_url
 
 
         test_link(full_path)
 
+    visited.update(internal_links)
+
 
     for link in internal_links:
-        call_links_recursively(link)
+
+        call_links_recursively(link,visited=visited)
 
 
 
