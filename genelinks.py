@@ -39,10 +39,9 @@ def call_links_recursively(page_url,visited=set()):
             # external link
             full_path= link_url
 
-
-        test_link(full_path)
-
-    visited.update(internal_links)
+        if link not in visited:
+            visited.add(link)
+            test_link(full_path)
 
 
     for link in internal_links:
