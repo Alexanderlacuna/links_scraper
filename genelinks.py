@@ -44,9 +44,9 @@ def call_links_recursively(page_url,visited=set()):
             test_link(full_path)
 
 
-    for link in internal_links:
+    # for link in internal_links:
 
-        call_links_recursively(link,visited=visited)
+    #     call_links_recursively(link,visited=visited)
 
 
 
