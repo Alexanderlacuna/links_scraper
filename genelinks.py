@@ -25,7 +25,7 @@ def test_link(link):
 def fetch_page_links(page_url):
     '''modified function to call internal links recursively '''
 
-    visited =set()
+    visited = set()
 
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
