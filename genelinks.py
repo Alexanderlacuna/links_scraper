@@ -58,7 +58,6 @@ def scraper_for_webpage(page_url):
     parsed_page = soup(html_page, "html.parser")
 
     for link in parsed_page.findAll("a", attrs={"href": re.compile("^http://")}):
-        print("calling internal_links")
         test_link(link.get("href"))
 
 
