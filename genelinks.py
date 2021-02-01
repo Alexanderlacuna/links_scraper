@@ -17,7 +17,7 @@ def test_link(link):
     status_code = results.status_code if results is not None else "404"
 
     print(f'the link {link} ---> {status_code}')
-def call_links_recursively(page_url,visited={}):
+def call_links_recursively(page_url,visited=set()):
 
     '''modified function to call internal links recursively '''
     internal_links = set()
