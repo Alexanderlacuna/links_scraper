@@ -44,9 +44,6 @@ def fetch_page_links(page_url):
             visited.add(link)
             test_link(full_path)
 
-        else:
-            print(f"link has already being visited {full_path}")
-
 
 def scraper_for_webpage(page_url):
     '''function for only links that starts with http '''
