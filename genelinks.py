@@ -24,13 +24,31 @@ def test_link(link):
 
 def fetch_css_links(parsed_page):
     print("fetching css links")
-    for link in parsed_page.findAll("links"):
+    for link in parsed_page.findAll("link"):
+        full_path =None
+
         link_url  = link.attrs.get("href")
-        print(link_url)
+        if re.match(r"^http://",link_url):
+            pass
+            # not sure whether to raise errors
+
+        elif re.match(r"^/css", link_url) or re.match(r"^/js", link_url):
+            full_path = urljoin('http://localhost:5004/', link_url)
+
+        if full_path is not None:
+            test_link(full_path)
+
+
+
+
+        # print(link_url)
+
 
 
 def fetch_html_links(parsed_page):
+
     for link in parsed_page.findAll("a"):
+        full_path = None
         link_url = link.attrs.get("href")
         if  re.match(r"^/", link_url):
             full_path = urljoin('http://localhost:5004/', link_url)
@@ -38,7 +56,11 @@ def fetch_html_links(parsed_page):
         elif re.match(r'^http://', link_url):
             full_path = link_url
 
-        test_link(full_path)
+        if full_path is not None:
+            test_link(full_path)
+
+
+        
 
 
 
@@ -51,7 +73,7 @@ def fetch_script_tags(parsed_page):
             if re.match(r'^http://',js_link):
                 print(f"Link should not be here {link_url}")
 
-            else:
+            elif re.match(r"^/css", js_link) or re.match(r"^/js", js_link):
                 full_path = urljoin('http://localhost:5004/', js_link)
                 test_link(full_path)
 
