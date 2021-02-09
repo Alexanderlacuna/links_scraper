@@ -22,13 +22,14 @@ def test_link(link):
 
     print(f'the link {link} ---> {status_code}')
 
+
 def fetch_css_links(parsed_page):
     print("fetching css links")
     for link in parsed_page.findAll("link"):
-        full_path =None
+        full_path = None
 
-        link_url  = link.attrs.get("href")
-        if re.match(r"^http://",link_url):
+        link_url = link.attrs.get("href")
+        if re.match(r"^http://", link_url):
             pass
             # not sure whether to raise errors
 
@@ -38,11 +39,7 @@ def fetch_css_links(parsed_page):
         if full_path is not None:
             test_link(full_path)
 
-
-
-
         # print(link_url)
-
 
 
 def fetch_html_links(parsed_page):
@@ -50,7 +47,7 @@ def fetch_html_links(parsed_page):
     for link in parsed_page.findAll("a"):
         full_path = None
         link_url = link.attrs.get("href")
-        if  re.match(r"^/", link_url):
+        if re.match(r"^/", link_url):
             full_path = urljoin('http://localhost:5004/', link_url)
 
         elif re.match(r'^http://', link_url):
@@ -60,26 +57,18 @@ def fetch_html_links(parsed_page):
             test_link(full_path)
 
 
-        
-
-
-
 def fetch_script_tags(parsed_page):
     print("--->fetching js links")
     for link in parsed_page.findAll("script"):
         # print(link)
         js_link = link.attrs.get("src")
         if js_link is not None:
-            if re.match(r'^http://',js_link):
+            if re.match(r'^http://', js_link):
                 print(f"Link should not be here {link_url}")
 
             elif re.match(r"^/css", js_link) or re.match(r"^/js", js_link):
                 full_path = urljoin('http://localhost:5004/', js_link)
                 test_link(full_path)
-
-
-
-
 
 
 def fetch_page_links(page_url):
@@ -91,7 +80,7 @@ def fetch_page_links(page_url):
     html_page = uReq(page_url)
     parsed_page = soup(html_page, "html.parser")
 
-    # fetch_html_links(parsed_page=parsed_page)
+    fetch_html_links(parsed_page=parsed_page)
     fetch_script_tags(parsed_page=parsed_page)
     fetch_css_links(parsed_page=parsed_page)
 
